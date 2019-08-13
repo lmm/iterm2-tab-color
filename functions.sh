@@ -6,7 +6,7 @@
 # ================================================================
 
 # Set the tab color
-it2-tab-color() {
+i2c() {
     # takes 1 hex string argument or 3 hex values for RGB
     local R G B
     case "$#" in
@@ -27,9 +27,9 @@ it2-tab-color() {
             B="$((16#${hex:4}))"
             ;;
         *)
-            echo "Usage: it2-tab-color color_hex"
+            echo "Usage: i2c color_hex"
             echo "          color_hex: 6 digit hex value (e.g. 1B2B34)"
-            echo "       it2-tab-color r_val g_val b_val"
+            echo "       i2c r_val g_val b_val"
             echo "          *_val: values for R, G, B from 0-255 (e.g. 27 43 52)"
             return
             ;;
@@ -42,14 +42,14 @@ it2-tab-color() {
 }
 
 # Reset tab color to default
-it2-tab-reset() {
+i2r() {
     echo -ne "\033]6;1;bg;*;default\a"
     # Unset environment variable
     unset IT2_SESSION_COLOR
 }
 
 # Check for ~/.base16_theme and set the tab color based on that
-it2-b16-theme() {
+i2b16() {
     if [ -f "$HOME/.base16_theme" ]; then
         local colornum color
         # If no argument was passed, default to color00
@@ -60,12 +60,12 @@ it2-b16-theme() {
             colornum="$(printf "%02d" $1)"
         fi
         color="$(perl -nle "print \$& if m{color$colornum=\"\K.*(?=\")}" "$HOME/.base16_theme")"
-        it2-tab-color ${color///}
+        i2c ${color///}
     fi
 }
 
 # Restore session tab color
 if [ -n "$IT2_SESSION_COLOR" ]; then
-    it2-tab-color $IT2_SESSION_COLOR
+    i2c $IT2_SESSION_COLOR
 fi
 
