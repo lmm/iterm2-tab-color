@@ -27,11 +27,9 @@ i2c() {
             B="$((16#${hex:4}))"
             ;;
         *)
-            echo "Usage: i2c color_hex"
-            echo "          color_hex: 6 digit hex value (e.g. 1B2B34)"
-            echo "       i2c r_val g_val b_val"
-            echo "          *_val: values for R, G, B from 0-255 (e.g. 27 43 52)"
-            return
+            R="$((RANDOM % 255))"
+            G="$((RANDOM % 255))"
+            B="$((RANDOM % 255))"
             ;;
     esac
     echo -ne "\033]6;1;bg;red;brightness;$R\a"
